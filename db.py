@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 
-base = sqlite3.connect("database.db")
+base = sqlite3.connect("databases/database.db")
 cur = base.cursor()
 
 cur.execute('DROP TABLE IF EXISTS users')
@@ -24,6 +24,14 @@ cur.execute("""CREATE TABLE IF NOT EXISTS tickets (
     ownerid INTEGER DEFAULT 0,
     state STRING DEFAULT 'free'
     )""")
+cur.execute('DROP TABLE IF EXISTS events')
+cur.execute("""CREATE TABLE IF NOT EXISTS events (
+    matchname STRING,
+    stadium STRING,
+    matchdate DATETIME,
+    minprice INTEGER
+    )""")
+
 
 matchnames = ["ЦСКА - Ростов", "ЦСКА - Зенит", "ЦСКА - НН",
             "Спартак - Локомотив", "Спартак - Рубин", "Спартак - Ахмат",
@@ -44,6 +52,14 @@ for i in range(len(matchnames)):
             for place in places:
                 query = '''INSERT INTO tickets (matchname, stadium, matchdate, sector, row, place, price) VALUES (?,?,?,?,?,?,?)'''
                 cur.execute(query, (matchname, stadium, time, sector, row, place, price))
+
+for i in range(len(matchnames)):
+    matchname = matchnames[i]
+    stadium = stadiums[i // 3]
+    time = times[i % 3]
+    query = '''INSERT INTO events (matchname, stadium, matchdate, minprice) VALUES (?,?,?,?)'''
+    cur.execute(query, (matchname, stadium, time, 500))
+
 
 query = '''INSERT INTO users (userid, firstname, lastname, pword, email) VALUES (?,?,?,?,?)'''
 cur.execute(query, (123, "Anton", "Antonov", "123", "email@gmail.com"))

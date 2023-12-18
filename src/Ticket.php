@@ -1,11 +1,12 @@
 <?php 
 
-namespace MyProject;
+namespace App;
+
 class Ticket
 {
     private $stadium;
-    private $match_name;
-    private $match_date;
+    private $matchname;
+    private $matchdate;
     private $sector;
     private $row;
     private $place;
@@ -21,10 +22,10 @@ class Ticket
                 $this->stadium = $value;
                 return $this;
             case 'match_name':
-                $this->match_name = $value;
+                $this->matchname = $value;
                 return $this;
             case 'match_date':
-                $this->match_date = $value;
+                $this->matchdate = $value;
                 return $this;
             case 'sector':
                 $this->sector = $value;
