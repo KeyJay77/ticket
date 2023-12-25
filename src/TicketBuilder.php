@@ -1,5 +1,7 @@
 <?php
-namespace MyProject;
+
+namespace App;
+
 class TicketBuilder
 {
     private $t;
